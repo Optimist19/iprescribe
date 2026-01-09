@@ -6,7 +6,7 @@ import {
   Divider,
   Typography
 } from "@mui/material";
-import { Bell } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import photo from "../assets/photo.jpg";
 import { ChevronDown } from "lucide-react";
 import { MoveDown } from "lucide-react";
@@ -21,6 +21,7 @@ import { usePatient } from "../store/patients";
 import BarChartComp from "./BarChartComp";
 import { useQuery } from "@tanstack/react-query";
 import { getAllStats } from "../utils/api/apis";
+import { useEffect } from "react";
 
 const fakeData = [
   {
@@ -71,25 +72,48 @@ const fakeData = [
 ];
 
 function Main() {
-  const userEmail = usePatient((state) => state.userEmail);
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["allStats"],
     queryFn: getAllStats
   });
 
+  const userEmail = usePatient((state) => state.userEmail);
+  const setStats = usePatient((state) => state.getStatFtn);
+  const stats = usePatient((state) => state.stats);
+
+  useEffect(() => {
+    if (data) {
+      setStats(data);
+    }
+  }, [data, setStats]);
   if (isLoading)
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          height: "100vh",
+          alignItems: "center"
+        }}>
         <CircularProgress />
       </Box>
     );
 
   if (error) {
-    return <Typography color="error">Failed to load dashboard data</Typography>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          height: "100vh",
+          alignItems: "center"
+        }}>
+        <Typography color="error">Failed to load dashboard data</Typography>{" "}
+      </Box>
+    );
   }
 
-  console.log(data?.data, "data");
+  console.log(stats, "data");
 
   return (
     <Box>
@@ -141,12 +165,17 @@ function Main() {
             </Typography>
           </Box>
           <ChevronDown size={10} />
+           <Box
+              sx={{ cursor: "pointer", py: 1, px: 1 }}
+              display={{ xs: "block", md: "none" }}>
+              <Menu />
+            </Box>
         </Box>
       </Box>
       <Divider orientation="horizontal" flexItem />
       <Box pl={4} pr={2}>
-        <Box display={"flex"} justifyContent={"space-between"} paddingY={2}>
-          <Box fontFamily={"Montserrat"}>
+        <Box display={"flex"} justifyContent={{xs: "flex-end", md: "space-between"}}  paddingY={2}>
+          <Box fontFamily={"Montserrat"} display={{xs: "none", sm: "block"}}>
             <Typography
               fontSize={13}
               fontFamily={"Montserrat"}
@@ -158,30 +187,44 @@ function Main() {
               fontSize={11}
               fontFamily={"Montserrat"}
               fontWeight={500}
-              color="#6C7278">
+              color="#6C7278" >
               Latest update for the last 7 days. check now{" "}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box
+            sx={{
+              display: {
+                xs: "grid",
+                md: "flex"
+              },
+              alignItems: "center",
+              gap: 1
+            }}>
             <DateRangePicker />
             {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
   <DatePicker label="Start date" />
   <DatePicker label="End date" />
 </LocalizationProvider> */}
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#283C85",
-                borderRadius: "8px",
-                fontWeight: 500,
-                fontSize: 10,
-                textTransform: "none",
-                paddingX: 4,
-                paddingY: 1,
-                fontFamily: "Montserrat"
-              }}>
-              Export
-            </Button>
+            <Box display={{xs: "flex"}} justifyContent={{xs: "flex-end"}}>
+              <Button
+                variant="contained"
+                sx={{
+                  width: {
+                    xs: 13
+                  },
+
+                  bgcolor: "#283C85",
+                  borderRadius: "8px",
+                  fontWeight: 500,
+                  fontSize: 10,
+                  textTransform: "none",
+                  paddingX: 4,
+                  paddingY: 1,
+                  fontFamily: "Montserrat"
+                }}>
+                Export
+              </Button>
+            </Box>
           </Box>
         </Box>
 

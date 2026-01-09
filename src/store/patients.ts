@@ -8,4 +8,5 @@ export const usePatient = create((set)=>({
 	// errMessage: "",
 	getAllPatientFtn: (patientsData)=> set((state) => ({patients: patientsData})),
 	getUserEmail: (data)=> set((state) => ({userEmail: data})),
+	getStatFtn: (data)=>set((state)=>({stats: data}))
 }))

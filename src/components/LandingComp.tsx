@@ -91,7 +91,7 @@ function LandingComp() {
               Join Waitlist
             </Button>
             <Box
-              sx={{ coursor: "pointer" }}
+              sx={{ cursor: "pointer" }}
               display={{ xs: "block", md: "none" }}>
               <Menu />
             </Box>

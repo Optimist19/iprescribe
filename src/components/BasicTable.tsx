@@ -43,9 +43,9 @@ export default function BasicTable() {
       </Box>
     );
 
-  // if (error) {
-  //   return <Typography color="error">Failed to load dashboard data</Typography>;
-  // }
+  if (error) {
+    return <Typography color="error">Failed to load dashboard data</Typography>;
+  }
 
   return (
     <>

@@ -9,6 +9,8 @@ import { CreditCard } from "lucide-react";
 import { Settings } from "lucide-react";
 import { Box, List, Typography } from "@mui/material";
 import MenuItem from "./MenuItem";
+import thirdLogo from "../assets/footer-logo.svg";
+
 
 const navItems = [
   {
@@ -76,11 +78,13 @@ function MenuList() {
       <Box
         style={{
           background: "linear-gradient(to bottom, #283C85, #090E1F)"
-        }}>
+        }} 
+        // display={{xs: "none"}}
+        >
         <Box sx={{ pl: 5, pt: 3, pb: 5 }}>
           <Box
             sx={{
-              display: { xs: "none", sm: "block" }
+              display: { xs: "none", md: "block" }
             }}>
             <img
               src={dashboard}
@@ -99,6 +103,19 @@ function MenuList() {
               alt="iprescribe logo mobile"
               style={{
                 width: "70px" 
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: { sm: "block", xs: "none", md: "none" },
+              marginLeft: { sm: "3px" }
+            }}>
+            <img
+              src={thirdLogo}
+              alt="iprescribe logo mobile"
+              style={{
+                width: "40px" 
               }}
             />
           </Box>
